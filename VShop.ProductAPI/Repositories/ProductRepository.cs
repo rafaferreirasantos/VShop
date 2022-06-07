@@ -14,14 +14,14 @@ public class ProductRepository : IProductRepository
   }
 
   public async Task<IEnumerable<Product>> GetAll()
-    => await _context.Products.ToListAsync();
+    => await _context.Products!.ToListAsync();
 
   public async Task<Product> GetById(int id)
-    => await _context.Products.Where(x => x.Id == id).FirstOrDefaultAsync();
+    => await _context.Products!.Where(x => x.Id == id).FirstOrDefaultAsync();
 
   public async Task<Product> Create(Product product)
   {
-    _context.Products.Add(product);
+    _context.Products!.Add(product);
     await _context.SaveChangesAsync();
     return product;
   }
@@ -34,7 +34,7 @@ public class ProductRepository : IProductRepository
 
   public async Task<Product> Delete(Product product)
   {
-    _context.Products.Remove(product);
+    _context.Products!.Remove(product);
     await _context.SaveChangesAsync();
     return product;
   }
@@ -42,7 +42,7 @@ public class ProductRepository : IProductRepository
   public async Task<Product> Delete(int id)
   {
     var product = await GetById(id);
-    _context.Products.Remove(product);
+    _context.Products!.Remove(product);
     await _context.SaveChangesAsync();
     return product;
   }
