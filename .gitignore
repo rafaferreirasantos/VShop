@@ -1,3 +1,5 @@
 VShop.ProductAPI/bin/
 VShop.ProductAPI/obj/
 .vs/
+/VShop.Web/bin/Debug/net6.0
+/VShop.Web/obj
