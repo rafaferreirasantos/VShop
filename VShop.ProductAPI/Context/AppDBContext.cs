@@ -13,14 +13,12 @@ public class AppDBContext : DbContext
   protected override void OnModelCreating(ModelBuilder mb)
   {
     //Category
-    mb.Entity<Category>().HasKey(c => c.Id);
     mb.Entity<Category>()
       .Property(c => c.Name)
       .HasMaxLength(100)
       .IsRequired();
 
     //Product
-    mb.Entity<Product>().HasKey(p => p.Id);
     mb.Entity<Product>()
       .Property(p => p.Name)
       .HasMaxLength(100)
@@ -44,10 +42,18 @@ public class AppDBContext : DbContext
       .OnDelete(DeleteBehavior.Cascade);
 
     //Initial Data
+
+    mb.Entity<Product>()
+      .HasData(
+        new Product() { Id = 1, CategoryId = 2, Description = "Cadeira giratória", ImageURL = "cadeira.jpg", Name = "Cadeira de escritório", Price = 1300, Stock = 2 }
+      );
+
     mb.Entity<Category>()
       .HasData(
         new Category() { Id = 1, Name = "Material Escolar"},
         new Category() { Id = 2, Name = "Acessórios"}
       );
+
+    
   }
 }

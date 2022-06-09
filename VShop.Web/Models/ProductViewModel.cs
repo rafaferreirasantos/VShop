@@ -1,29 +1,20 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using VShop.ProductAPI.Models;
 
-namespace VShop.ProductAPI.DTOs;
+namespace VShop.Web.Models;
 
-public class ProductDTO
+public class ProductViewModel
 {
   public int Id { get; set; }
-
-  [Required(ErrorMessage = "The name is required")]
-  [MinLength(3)]
-  [MaxLength(100)]
+  [Required]
   public string? Name { get; set; }
-
-  [Required(ErrorMessage = "The price is required")]
+  [Required]
   public decimal Price { get; set; }
-
+  [Required]
   public string? Description { get; set; }
-
-  [Required(ErrorMessage = "The stock is required")]
-  [Range(1, 9999)]
+  [Required]
   public long Stock { get; set; }
-
+  [Required]
   public string? ImageURL { get; set; }
-
-  public Category? Category { get; set; }
   public string? CategoryName { get; set; }
   public int CategoryId { get; set; }
 }
