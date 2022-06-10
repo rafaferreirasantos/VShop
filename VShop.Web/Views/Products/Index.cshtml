@@ -27,14 +27,14 @@
     <tbody>
       @foreach (var item in Model)
       {
-        <tr>
+        <tr class="align-middle">
           <td>@Html.DisplayFor(modelItem => item.Name)</td>
           <td>@Html.DisplayFor(modelItem => item.CategoryName)</td>
           <td>@Html.DisplayFor(modelItem => item.Description)</td>
           <td>@Html.DisplayFor(modelItem => item.Price)</td>
           <td>
-            <a asp-action="UpdateProduct" asp-route-id="@item.Id" title="Edita" class="btn btn-warning"><span class="fas fa-edit"></span></a>
-            <a asp-action="DeleteProduct" asp-route-id="@item.Id" title="Deleta" class="btn btn-danger"><span class="fas fa-trash-alt"></span></a>
+            <a asp-action="UpdateProduct" asp-route-id="@item.Id" title="Edita" class="btn btn-warning"><span class="fas fa-sm fa-edit"></span></a>
+            <a asp-action="DeleteProduct" asp-route-id="@item.Id" title="Deleta" class="btn btn-danger"><span class="fas fa-sm fa-trash-alt"></span></a>
           </td>
         </tr>
       }

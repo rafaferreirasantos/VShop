@@ -35,7 +35,7 @@ public class ProductService : IProductService
   public async Task<ProductViewModel?> FindProductById(int id)
   {
     var client = _clientFactory.CreateClient("ProductAPI");
-    using (var response = await client.GetAsync($"{apiEndPoint}{id}"))
+    using (var response = await client.GetAsync($"{apiEndPoint}/{id}"))
     {
       if (!response.IsSuccessStatusCode) return null;
 
@@ -73,7 +73,7 @@ public class ProductService : IProductService
   public async Task<bool> Delete(int id)
   {
     var client = _clientFactory.CreateClient("ProductAPI");
-    using (var response = await client.DeleteAsync($"{apiEndPoint}{id}"))
+    using (var response = await client.DeleteAsync($"{apiEndPoint}/{id}"))
     {
       if (response.IsSuccessStatusCode) return true;
     }

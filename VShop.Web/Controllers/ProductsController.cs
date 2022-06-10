@@ -25,22 +25,62 @@ namespace VShop.Web.Controllers
     [HttpGet]
     public async Task<ActionResult<IEnumerable<CategoryViewModel>>> CreateProduct()
     {
-      ViewBag.AllCategories = new SelectList(await _serviceCategory.GetAllCategories(), "Id", "Name");
+      ViewBag.AllCategories = await GetAllCategoriesList();
       return View();
     }
     [HttpPost]
-    public async Task<IActionResult> CreateProduct(ProductViewModel productViewModel)
+    public async Task<IActionResult> CreateProduct(ProductViewModel productVM)
     {
       if (ModelState.IsValid)
       {
-        var result = await _serviceProduct.CreateProduct(productViewModel);
+        var result = await _serviceProduct.CreateProduct(productVM);
         if (result is not null) return RedirectToAction(nameof(Index));
       }
       else
       {
-        ViewBag.AllCategories = new SelectList(await _serviceCategory.GetAllCategories(), "Id", "Name");
+        ViewBag.AllCategories = await GetAllCategoriesList();
       }
-      return View(productViewModel);
+      return View(productVM);
+    }
+    [HttpGet]
+    public async Task<IActionResult> UpdateProduct(int id)
+    {
+      ViewBag.AllCategories = await GetAllCategoriesList();
+      var result = await _serviceProduct.FindProductById(id);
+      if (result is null) return View("Error");
+      return View(result);
+    }
+    [HttpPost]
+    public async Task<ActionResult> UpdateProduct(ProductViewModel productVM)
+    {
+      if (ModelState.IsValid)
+      {
+        var result = await _serviceProduct.UpdateProduct(productVM);
+        if (result is not null)
+        {
+          return RedirectToAction(nameof(Index));
+        }
+      }
+      ViewBag.AllCategories = await GetAllCategoriesList();
+      return View(productVM);
+    }
+    [HttpGet]
+    public async Task<ActionResult> DeleteProduct(int id)
+    {
+      var product = await _serviceProduct.FindProductById(id);
+      if (product is not null) return View(product);
+      return View("Error");
+    }
+    [HttpPost, ActionName("DeleteProduct")]
+    public async Task<ActionResult> DeleteProductPost(int id)
+    {
+      var result = await _serviceProduct.Delete(id);
+      if (result) return RedirectToAction(nameof(Index));
+      return View("Error");
+    }
+    private async Task<SelectList> GetAllCategoriesList()
+    {
+      return new SelectList(await _serviceCategory.GetAllCategories(), "Id", "Name");
     }
   }
 }
